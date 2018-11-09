@@ -34,6 +34,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
 
   const starHistory = await getStarHistory(repo).catch(e => { document.getElementById('container').innerHTML = `<h2>${e}</h2>`;});
   console.log(starHistory);
+  const rows = starHistory;
+  let csvContent = "data:text/csv;charset=utf-8,";
+  rows.forEach(function(rowArray){
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+  }); 
+  var encodedUri = encodeURI(csvContent);
+  window.open(encodedUri);
 
   // 新数据集
   data.push({
